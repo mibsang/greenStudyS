@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.greenStudyS.dao.MemberDAO">
+	
+	<select id="getMemberIdCheck" resultType="int">
+		select count(*) from member where mid = #{mid}
+	</select>
+	
+	<select id="getMemberNickNameCheck" resultType="int">
+		select count(*) from member where nickName = #{nickName}
+	</select>
+	
+	<select id="getMemberCheckId" resultType="MemberVO">
+		select * from member where mid = #{mid}
+	</select>
+	
+	<select id="getMemberList" resultType="MemberVO">
+		select * from member order by idx desc limit #{startIndexNo}, #{pageSize};
+	</select>
+	
+	<select id="getTotRecCnt" resultType="int">
+		select count(*) from member;
+	</select>
+
+	<select id="getAdTotRecCnt" resultType="int">
+		select count(*) from member
+		<if test="levels != ''">
+			where level in (${levels})
+		</if>
+	</select>
+	
+	<select id="getMemberEmailList" resultType="MemberVO">
+		select name, email from member order by name
+	</select>
+		
+	
+	
+	
+	
+	<insert id="setMemberJoin">
+		insert into member values (default, #{vo.mid}, #{vo.pwd}, #{vo.nickName}, #{vo.name}, #{vo.gender}, #{vo.birthday}, #{vo.tel}, #{vo.address}, #{vo.email}, #{vo.homePage}, #{vo.job}, #{vo.hobby}, #{vo.photo}, #{vo.content}, #{vo.userInfor}, default, default, default, default, default, default, default)
+	</insert>
+	
+	
+	
+	
+	
+	
+	<update id="setMemberInfoUpdate">
+		update member set point = #{vo.point}, visitCnt = visitCnt + 1, lastDate = now(), todayCnt = #{vo.todayCnt} where mid = #{vo.mid};
+	</update>
+
+	<update id="setMemberPwdUpdate">
+		update member set pwd = #{pwd} where mid = #{mid}
+	</update>
+	
+	<update id="setMemberLevelUpdate">
+		update member set level = 2 where mid = #{mid}
+	</update>
+	
+	<update id="setMemberUpdateOk">
+		update member set nickName = #{vo.nickName}, name = #{vo.name}, gender = #{vo.gender}, birthday = #{vo.birthday}, tel = #{vo.tel}, address = #{vo.address}, email = #{vo.email}, homePage = #{vo.homePage}, job = #{vo.job}, hobby = #{vo.hobby}, photo = #{vo.photo}, content = #{vo.content}, userInfor = #{vo.userInfor} where mid = #{vo.mid}
+	</update>
+	
+	<update id="setUserDel">
+		update member set userDel = 'OK', lastDate = now(), level = 99 where mid = #{mid}
+	</update>
+</mapper>

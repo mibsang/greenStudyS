@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.greenStudyS.dao.GuestDAO">
+	<select id="getGuestList" resultType="com.spring.greenStudyS.vo.GuestVO">
+		select * from guest order by idx desc limit #{startIndexNo}, #{pageSize};
+	</select>
+	<select id="getTotRecCnt" resultType="int">
+		select count(*) from guest; 
+	</select>
+	
+	
+	
+	<insert id="setInputGuest">
+		insert into guest values (default, #{nickName}, #{pwd}, #{content}, #{email}, #{hostIP}, default)
+	</insert>
+	
+	
+	<delete id="setGuestDelete">
+		delete from guest where idx = #{idx} and pwd = #{pwd}
+	</delete>
+	
+	
+	
+	<update id="setGuestUpdate">
+		update guest set content = #{content} where idx = #{idx} and pwd = #{pwd}
+	</update>
+	
+</mapper>
