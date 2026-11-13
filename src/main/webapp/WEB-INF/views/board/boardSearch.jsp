@@ -14,7 +14,7 @@
 <jsp:include page="/WEB-INF/views/include/slide2.jsp" />
 <p><br/></p>
 <div class="container flex-grow-1 py-4">
-  <h2>개별검색</h2>
+  <h2>개별검색 git 연습중</h2>
 </div>
 <p><br/></p>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
