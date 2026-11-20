@@ -293,7 +293,7 @@
 		    </tr>
 	    </c:forEach>
 	  </table>
-	  <c:if test="${vo.totPage > 1}">
+	  <c:if test="${vo.totPage >= 1}">
     <nav class="mt-4">
       <ul class="pagination gb-pager justify-content-center">
         <!-- 이전 -->

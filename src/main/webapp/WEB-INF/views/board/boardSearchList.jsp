@@ -17,7 +17,7 @@
   <h4 class="text-center">게 시 판 검 색 리 스 트</h4>
   <div class="row mt-4 mb-1">
     <div class="col">(<font color="blue"><b>${searchStr}</b></font>(으)로 <font color="orange"><b>${searchString}</b></font>를 검색한 결과 <font color="red"><b>${searchCnt}</b></font>건이 검색 되었습니다.)</div>
-    <div class="col text-end"><a href="boardList.bo" class="btn btn-primary btn-sm">돌아가기</a></div>
+    <div class="col text-end"><a href="boardList" class="btn btn-primary btn-sm">돌아가기</a></div>
   </div>
   <table class="table table-hover">
     <tr class="table-secondary text-center">
@@ -31,14 +31,27 @@
       <tr class="text-center">
         <td>${searchCnt - st.index}</td>
         <td>
-          <a href="boardContent.bo?idx=${vo.idx}&search=${search}&searchString=${searchString}&flag=S">${vo.title}</a>
+          <a href="boardContent?idx=${vo.idx}&search=${search}&searchString=${searchString}&flag=S">${vo.title}</a>
         </td>
         <td>${vo.nickName}</td>
-        <td>${vo.wDate}</td>
+        <td>${vo.WDate}</td>
         <td>${vo.readNum}</td>
       </tr>
     </c:forEach>
   </table>
+  <!-- 검색기 시작 -->
+  <div class="container text-center">
+    <form name="searchForm" method="post" action="boardSearchList">
+      <select name="search" id="search">
+        <option value="title">글제목</option>
+        <option value="nickName">글쓴이</option>
+        <option value="content">글내용</option>
+      </select>
+      <input type="text" name="searchString" id="searchString" required />
+      <input type="submit" value="검색"/>
+    </form>
+  </div>
+  <!-- 검색기 끝 -->
 </div>
 <p><br/></p>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />

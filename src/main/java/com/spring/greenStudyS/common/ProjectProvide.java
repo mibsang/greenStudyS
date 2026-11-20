@@ -134,5 +134,27 @@ public class ProjectProvide {
 		File file = new File(realPath + fileName);
 		if(file.exists()) file.delete();
 	}
+
+	public void writeFile(MultipartFile file, String sFileName, String path) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/"+path+"/");
+		
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(realPath+sFileName);
+			if(file.getBytes().length != -1) {
+				fos.write(file.getBytes());
+			}
+		} 
+		catch (IOException e) {
+			System.out.println("파일업로드 실패 : " + e.getMessage());
+		}
+		finally {
+			try {
+				fos.close();
+			} 
+			catch (IOException e) {}
+		}
+	}
 	
 }

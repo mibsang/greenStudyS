@@ -196,34 +196,112 @@
   <script src="${ctp}/js/pointerSpectrum.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
   <style>
-    .gb-wrap { max-width: 860px; }
-    .gb-card { border: 1px solid #e9ecef; border-radius: 14px; }
-    .gb-card .form-control:focus { box-shadow: 0 0 0 .2rem rgba(13,110,253,.12); }
-    .gb-label { font-size: .85rem; color: #6c757d; margin-bottom: .3rem; }
-    .gb-label .req { color: #dc3545; }
-    .gb-item { padding: 1rem 0; border-bottom: 1px solid #f1f3f5; }
-    .gb-avatar { width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-                 display: flex; align-items: center; justify-content: center; font-weight: 600; }
-    .gb-av0 { background:#e7f1ff; color:#0b5ed7; }
-    .gb-av1 { background:#e6f6ee; color:#198754; }
-    .gb-av2 { background:#fff3e0; color:#c76a00; }
-    .gb-av3 { background:#f3e8ff; color:#7e3bd6; }
-    .gb-av4 { background:#ffe9ec; color:#c2185b; }
-    .gb-meta { font-size: .82rem; color: #adb5bd; }
-    .gb-bubble { background: #f8f9fa; border-radius: 10px; padding: .7rem .9rem; margin-top: .4rem;
-                 line-height: 1.6; word-break: break-all; }
-    .gb-icon-btn { padding: .15rem .45rem; font-size: .85rem; }
-    .gb-no { font-size: .75rem; color: #ced4da; font-weight: 600; }
+    .gb-wrap { 
+      max-width: 860px; 
+    }
+    .gb-card { 
+	    border: 1px solid #e9ecef; 
+	    border-radius: 14px; 
+    }
+    .gb-card .form-control:focus { 
+      box-shadow: 0 0 0 .2rem rgba(13,110,253,.12); 
+    }
+    .gb-label { 
+	    font-size: .85rem; 
+	    color: #6c757d;
+	    margin-bottom: .3rem; 
+    }
+    .gb-label .req { 
+      color: #dc3545; 
+    }
+    .gb-item { 
+	    padding: 1rem 0; 
+	    border-bottom: 1px solid #f1f3f5; 
+    }
+    .gb-avatar { 
+	    width: 42px; 
+	    height: 42px; 
+	    border-radius: 50%; 
+	    flex-shrink: 0;
+	    display: flex; 
+	    align-items: center; 
+	    justify-content: center; 
+	    font-weight: 600; 
+    }
+    .gb-av0 { 
+	    background:#e7f1ff; 
+	    color:#0b5ed7; 
+    }
+    .gb-av1 { 
+	    background:#e6f6ee; 
+	    color:#198754; 
+    }
+    .gb-av2 { 
+	    background:#fff3e0; 
+	    color:#c76a00; 
+    }
+    .gb-av3 { 
+	    background:#f3e8ff; 
+	    color:#7e3bd6; 
+    }
+    .gb-av4 { 
+	    background:#ffe9ec; 
+	    color:#c2185b; 
+    }
+    .gb-meta { 
+	    font-size: .82rem; 
+	    color: #adb5bd; 
+    }
+    .gb-bubble { 
+	    background: #f8f9fa; 
+	    border-radius: 10px; 
+	    padding: .7rem .9rem; 
+	    margin-top: .4rem; 
+	    line-height: 1.6; 
+	    word-break: break-all; 
+    }
+    .gb-icon-btn { 
+	    padding: .15rem .45rem; 
+	    font-size: .85rem; 
+    }
+    .gb-no { 
+	    font-size: .75rem; 
+	    color: #ced4da; 
+	    font-weight: 600; 
+    }
 
     /* 페이지네이션 */
-    .gb-pager { gap: .25rem; }
-    .gb-pager .page-link { border: 0; border-radius: 50% !important; width: 36px; height: 36px;
-                           display: flex; align-items: center; justify-content: center;
-                           color: #495057; background: transparent; font-size: .9rem; }
-    .gb-pager .page-link:hover { background: #f1f3f5; color: #212529; }
-    .gb-pager .page-item.active .page-link { background: #212529; color: #fff; font-weight: 600; }
-    .gb-pager .page-item.disabled .page-link { color: #dee2e6; background: transparent; }
-    .gb-pager .gb-dots .page-link { width: auto; color: #adb5bd; cursor: default; }
+   .gb-pager { 
+     gap: .25rem; 
+   }
+   .gb-pager .page-link { 
+	   border: 0; border-radius: 50% !important; 
+	   width: 36px; 
+	   height: 36px;
+	   display: flex; 
+	   align-items: center; 
+	   justify-content: center;
+	   color: #495057; 
+	   background: transparent; 
+	   font-size: .9rem; 
+   }
+    .gb-pager .page-link:hover { 
+      background: #f1f3f5; color: #212529; 
+    }
+    .gb-pager .page-item.active .page-link { 
+	    background: #212529; 
+	    color: #fff; 
+	    font-weight: 600; 
+    }
+    .gb-pager .page-item.disabled .page-link { 
+	    color: #dee2e6; 
+	    background: transparent; 
+    }
+    .gb-pager .gb-dots .page-link { 
+	    width: auto; 
+	    color: #adb5bd; 
+	    cursor: default; 
+    }
   </style>
   <script>
   	'use strict';
@@ -425,7 +503,7 @@
   </div>
 
   <!-- 페이지네이션 -->
-  <c:if test="${vo.totPage > 1}">
+  <c:if test="${vo.totPage >= 1}">
     <nav class="mt-4">
       <ul class="pagination gb-pager justify-content-center">
         <!-- 이전 -->
@@ -448,7 +526,6 @@
           <c:if test="${vo.endPage < vo.totPage - 1}"><li class="page-item gb-dots"><span class="page-link">…</span></li></c:if>
           <li class="page-item"><a class="page-link" href="guest?pag=${vo.totPage}&pageSize=${vo.pageSize}">${vo.totPage}</a></li>
         </c:if>
-
         <!-- 다음 -->
         <li class="page-item ${vo.pag == vo.totPage ? 'disabled' : ''}">
           <a class="page-link" href="guest?pag=${vo.pag + 1}&pageSize=${vo.pageSize}" title="다음"><i class="bi bi-chevron-right"></i></a>

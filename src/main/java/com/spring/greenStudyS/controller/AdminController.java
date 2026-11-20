@@ -63,7 +63,7 @@ public class AdminController {
 		vo.setPag(pag);
 		vo.setPageSize(pageSize);
 		vo.setSection("adMember");
-		vo.setParts(levels);
+		vo.setPart(levels);
 		vo = pagiNation.getTotRecCnt(vo);
 		
 		List<MemberVO> vos = adminService.getAdMemberList(vo.getStartIndexNo(), pageSize, levels);

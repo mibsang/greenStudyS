@@ -23,15 +23,19 @@ insert into board values (default,'admin','관리자','게시판 서비시 개�
 
 select * from board;
 
+
 /* 댓글 달기 */
 create table boardReply (
   idx      	int not null auto_increment,/* 댓글 고유번호 */
   boardIdx	int not null,						/* 원본글의 고유번호 */
+ 	re_step		int not null,						/* 레벨(re_step)에 따른 들여쓰기(부모 re_step+1) */
+ 	re_order	int not null,						/* 댓글의 순서(부모re_order 보다 큰 댓글을 모두 +1 시키고 자신은 부re_order+1 처리) */
   mid				varchar(20),						/* 댓글 올린이 아이디 */
   nickName  varchar(20) not null,		/* 댓글 올린이 별명 */
   wDate			datetime default now(),	/* 댓글 쓴날짜 */
   hostIp		varchar(50) not null,		/* 댓글 올린 Host IP */
   content   text not null,					/* 댓글 내용 */
+  delCheck	char(4) not null default 'NO',
   primary key(idx),
   foreign key(mid)      references member(mid) on delete set null,
   foreign key(boardIdx) references board(idx)
@@ -39,10 +43,12 @@ create table boardReply (
   on update restrict
   on delete cascade
 );
+
+
 desc boardReply;
 drop table boardReply;
 
-insert into boardReply values (default,28,'kms1234','김장미',default,'192.168.50.57','잘 보고 갑니다.');
+insert into boardReply values (default,10,'test1','홍길동',default,'192.168.50.57','잘 보고 갑니다.');
 
 select * from boardReply;
 

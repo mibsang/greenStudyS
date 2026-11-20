@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <title>boardInput.jsp</title>
+  <script src="${ctp}/ckeditor/ckeditor.js"></script>
   <style>
     th {
       background-color: #eee !important;
@@ -33,7 +34,17 @@
       </tr>
       <tr>
         <th>글내용</th>
-        <td><textarea name="content" id="content" rows="6" class="form-control" required></textarea></td>
+        <td>
+        	<textarea name="content" id="CKEDITOR" rows="6" class="form-control" required></textarea>
+        	<script>
+        		CKEDITOR.replace("content",{
+        			editorplaceholder: "내용을 입력하세요.",
+        			height:400,
+        			filebrowserUploadUrl:"${ctp}/imageUpload",
+        			uploadUrl: "${ctp}/imageUpload"
+        		});
+        	</script>
+        </td>
       </tr>
       <tr>
         <th>공개여부</th>

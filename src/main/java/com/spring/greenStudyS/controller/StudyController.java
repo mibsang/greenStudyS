@@ -1,5 +1,6 @@
 package com.spring.greenStudyS.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.greenStudyS.common.ARIAUtil;
 import com.spring.greenStudyS.common.ProjectProvide;
@@ -203,7 +205,14 @@ public class StudyController {
 	}
 
 	@GetMapping("/fileUpload")
-	public String fileUploadGet() {
+	public String fileUploadGet(Model model, HttpServletRequest request) {
+		String realPath = request.getSession().getServletContext().getRealPath("resources/data/fileUpload");
+		
+		String[] files = new File(realPath).list();
+		
+		model.addAttribute("files", files);
+		model.addAttribute("fileCnt", files.length);
+		
 		return "study/fileUpload/fileUploadForm";
 	}
 	
@@ -237,6 +246,80 @@ public class StudyController {
 		if(res != 0) return "redirect:/message/fileUploadOk";
 		else return "redirect:/message/fileUploadNo";
 		
+	}
+	
+	// 파일 개별 삭제
+	@ResponseBody
+	@PostMapping("/fileUpload/fileDelete")
+	public void fileDeletePost(HttpServletRequest request, String file) {
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/fileUpload/");
+		
+		new File(realPath + file).delete();
+	}
+	
+	// 파일 전체 삭제
+	@ResponseBody
+	@PostMapping("/fileUpload/fileDeleteAll")
+	public String fileDeleteAllPost(HttpServletRequest request, String file) {
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/fileUpload/");
+	
+		File targetFolder = new File(realPath);
+		if(!targetFolder.exists()) return "0";
+		
+		File[] files = targetFolder.listFiles();
+		if(files.length == 0) return "0";
+		
+		for(File f : files) {
+			if(!f.isDirectory()) f.delete();
+		}
+		
+		return "1";	
+	}
+	
+	// 파일 선택 삭제
+	@ResponseBody
+	@PostMapping("/fileUpload/fileSelectDelete")
+	public String fileSelectDeletePost(HttpServletRequest request, String delItems) {
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/fileUpload/");
+		
+		String[] files = delItems.split("/");
+		if(files.length == 0) return "0";
+		
+		for(String f : files) {
+			new File(realPath + f).delete();
+		}
+		
+		return "1";	
+	}
+	
+	@GetMapping("/fileUpload/multiFile")
+	public String multiFileGet() {
+
+		return "study/fileUpload/multiFile";
+	}
+	
+	@PostMapping("/fileUpload/multiFile")
+	public String multiFilePost(MultipartHttpServletRequest mFile) {
+		int res = studyService.multiFileUpload(mFile);
+		
+		if(res != 0) return "redirect:/message/multiFileUploadOk";
+		else return "redirect:/message/multiFileUploadNo";
+	}
+
+	@GetMapping("/fileUpload/multiFile2")
+	public String multiFile2Get() {
+		return "study/fileUpload/multiFile2";
+	}
+	
+	@PostMapping("/fileUpload/multiFile2")
+	public String multiFile2Post(MultipartHttpServletRequest mFile, HttpServletRequest request) {
+		String[] imgNames = request.getParameter("imgNames").split("/");
+		
+		for(String imgName : imgNames) {
+			System.out.println("imgName : " + imgName);
+		}
+		
+		return "study/fileUpload/multiFile2";
 	}
 	
 	@GetMapping("/mailForm")
@@ -353,6 +436,10 @@ public class StudyController {
 		
 		return pwd;
 	}
+	
+	
+	
+	
 	
 }
 

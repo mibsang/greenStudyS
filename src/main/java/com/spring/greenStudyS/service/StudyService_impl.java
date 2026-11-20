@@ -1,5 +1,6 @@
 package com.spring.greenStudyS.service;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.spring.greenStudyS.common.ProjectProvide;
 import com.spring.greenStudyS.dao.StudyDAO;
 import com.spring.greenStudyS.vo.User2VO;
 
@@ -20,6 +23,9 @@ public class StudyService_impl implements StudyService {
 	
 	@Autowired
 	StudyDAO studyDAO;
+	
+	@Autowired
+	ProjectProvide projectProvide;
 
 	@Override
 	public String[] getCityStringArray(String dodo) {
@@ -220,6 +226,26 @@ public class StudyService_impl implements StudyService {
 			} 
 			catch (IOException e) {}
 		}
+		
+		return res;
+	}
+
+	@Override
+	public int multiFileUpload(MultipartHttpServletRequest mFile) {
+		int res = 0;
+		
+		List<MultipartFile> files = mFile.getFiles("fName");
+		
+		String oFileNames = "";
+		
+		for(MultipartFile f : files) {
+			oFileNames += f.getOriginalFilename() + "/";
+			projectProvide.uploadFile(f, "fileUpload", null);
+			res = 1;
+		}
+		oFileNames = oFileNames.substring(0, oFileNames.length()-1);
+		
+		System.out.println("원본파일 : " + oFileNames);
 		
 		return res;
 	}

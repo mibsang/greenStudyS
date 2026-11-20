@@ -11,7 +11,90 @@
 		select *, timestampdiff(hour, wDate, now()) as hour_diff from board order by idx desc limit #{startIndexNo}, #{pageSize};
 	</select>
 	
+	<select id="getBoardContent" resultType="com.spring.greenStudyS.vo.BoardVO">
+		select * from board where idx = #{idx}
+	</select>
+	<!-- <![CDATA[   ]]> -->
+	<!-- <select id="getPreNextSearch" resultType="com.spring.greenStudyS.vo.BoardVO">
+		 <if test="str == 'preVO'">
+	  	select idx,title from board where <![CDATA[idx < #{idx}]]> order by idx desc limit 1;
+	  </if>
+	  <if test="str != 'preVO'">
+	  	select idx,title from board where <![CDATA[idx > #{idx}]]> order by idx limit 1;
+	  </if>
+	</select> -->
+	<select id="getPreNextSearch" resultType="com.spring.greenStudyS.vo.BoardVO">
+		select idx,title from board where
+		<if test="str == 'preVO'"><![CDATA[idx < #{idx}]]></if>
+	  <if test="str != 'preVO'"><![CDATA[idx > #{idx}]]></if>
+	  order by idx
+	  <if test="str == 'preVO'">desc</if>
+	  limit 1
+	</select>
+	
+	<select id="getBoardSearchList" resultType="com.spring.greenStudyS.vo.BoardVO">
+		select * from board where ${search} like concat('%', #{searchString}, '%') order by idx desc
+	</select>
+	
+	<select id="getBoardParentReplyCheck" resultType="com.spring.greenStudyS.vo.BoardReplyVO">
+		select * from boardReply where boardIdx = #{boardIdx} order by re_order desc limit 1
+	</select>
+	
+	<select id="getBoardReply" resultType="com.spring.greenStudyS.vo.BoardReplyVO">
+		select *, timestampdiff(minute, wDate, now()) as time_diff from boardReply where boardIdx = #{idx} order by re_order
+	</select>
 	
 	
+	
+	
+	
+	<insert id="setboardInput">
+		insert into board values (default, #{vo.mid}, #{vo.nickName}, #{vo.title}, #{vo.content}, #{vo.hostIp}, #{vo.openSw}, default, default, default, default)
+	</insert>
+	
+	<insert id="setBoardReplyInput">
+		insert into boardReply values (default, #{vo.boardIdx}, #{vo.re_step}, #{vo.re_order}, #{vo.mid}, #{vo.nickName}, default, #{vo.hostIp}, #{vo.content}, default)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	<update id="setBoardUpdate">
+		update board set title = #{vo.title}, content = #{vo.content}, openSw = #{vo.openSw} where idx = #{vo.idx}
+	</update>
+	
+	<update id="setReadNumPlus">
+		update board set readNum = readNum + 1 where idx = #{idx}
+	</update>
+	
+	<update id="setboardGoodCheck">
+		update board set good = good + #{sw} where idx = #{idx}
+	</update>
+	
+	<update id="setReplyOrderUpdate">
+		update boardReply set re_order = re_order + 1 where boardIdx = #{boardIdx} and re_order > #{re_order}
+	</update>
+	
+	<update id="setBoardReplyUpdate">
+		update boardReply set content = #{content} where idx = #{idx}
+	</update>
+	
+	<update id="setBoardReplyDeleteChange">
+		update boardReply set delCheck = 'OK' where idx = #{idx}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	<delete id="setBoardDelete">
+		delete from board where idx = #{idx}
+	</delete>
 	
 </mapper>

@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="getMemberList" resultType="MemberVO">
-		select * from member order by idx desc limit #{startIndexNo}, #{pageSize};
+		select * from member order by idx desc limit #{startIndexNo}, #{pageSize}
 	</select>
 	
 	<select id="getTotRecCnt" resultType="int">
@@ -28,6 +28,7 @@
 		<if test="levels != ''">
 			where level in (${levels})
 		</if>
+		order by idx desc
 	</select>
 	
 	<select id="getMemberEmailList" resultType="MemberVO">

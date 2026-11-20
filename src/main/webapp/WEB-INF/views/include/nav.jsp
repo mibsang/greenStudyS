@@ -33,7 +33,7 @@
     <a href="${ctp}/guest/guest" class="w3-bar-item w3-button w3-padding-large w3-hide-small">GUEST</a>
     <c:if test="${!empty sLevel}">
 	    <a href="${ctp}/board/boardList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">BOARD</a>
-	    <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PDS</a>
+	    <a href="${ctp}/pds/pdsList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PDS</a>
 	    <div class="w3-dropdown-hover w3-hide-small">
 	      <button class="w3-padding-large w3-button" title="More">STUDY1<i class="fa fa-caret-down"></i></button>     
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
